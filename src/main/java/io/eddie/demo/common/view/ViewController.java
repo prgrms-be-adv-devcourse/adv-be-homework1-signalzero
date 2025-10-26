@@ -1,7 +1,7 @@
 package io.eddie.demo.common.view;
 
-import io.eddie.demo.domain.carts.domain.model.CartMapper;
-import io.eddie.demo.domain.carts.domain.model.dto.CartDescription;
+import io.eddie.demo.domain.carts.infrastructure.api.dto.CartMapper;
+import io.eddie.demo.domain.carts.infrastructure.api.dto.CartDescription;
 import io.eddie.demo.domain.carts.domain.model.entity.Cart;
 import io.eddie.demo.domain.carts.application.port.in.CartUseCase;
 import lombok.RequiredArgsConstructor;

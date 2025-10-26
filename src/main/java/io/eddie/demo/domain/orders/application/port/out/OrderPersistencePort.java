@@ -1,7 +1,6 @@
 package io.eddie.demo.domain.orders.application.port.out;
 
 import io.eddie.demo.domain.orders.domain.model.entity.Orders;
-import org.hibernate.query.Order;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

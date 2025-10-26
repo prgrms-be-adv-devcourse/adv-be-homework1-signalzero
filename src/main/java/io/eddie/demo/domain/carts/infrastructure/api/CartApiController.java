@@ -1,13 +1,13 @@
 package io.eddie.demo.domain.carts.infrastructure.api;
 
 import io.eddie.demo.common.model.web.BaseResponse;
-import io.eddie.demo.domain.carts.domain.model.CartMapper;
-import io.eddie.demo.domain.carts.domain.model.dto.CartDescription;
-import io.eddie.demo.domain.carts.domain.model.dto.CartItemDescription;
+import io.eddie.demo.domain.carts.infrastructure.api.dto.CartDescription;
+import io.eddie.demo.domain.carts.infrastructure.api.dto.CartItemDescription;
 import io.eddie.demo.domain.carts.domain.model.entity.Cart;
 import io.eddie.demo.domain.carts.domain.model.entity.CartItem;
 import io.eddie.demo.domain.carts.domain.model.vo.CreateCartItemRequest;
 import io.eddie.demo.domain.carts.application.port.in.CartUseCase;
+import io.eddie.demo.domain.carts.infrastructure.api.dto.CartMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

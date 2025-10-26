@@ -1,4 +1,4 @@
-package io.eddie.demo.domain.orders.domain.model.dto;
+package io.eddie.demo.domain.orders.infratructure.api.dto;
 
 public record OrderItemDescription(
         String productCode,

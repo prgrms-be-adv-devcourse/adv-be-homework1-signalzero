@@ -1,7 +1,5 @@
-package io.eddie.demo.domain.carts.domain.model;
+package io.eddie.demo.domain.carts.infrastructure.api.dto;
 
-import io.eddie.demo.domain.carts.domain.model.dto.CartDescription;
-import io.eddie.demo.domain.carts.domain.model.dto.CartItemDescription;
 import io.eddie.demo.domain.carts.domain.model.entity.Cart;
 import io.eddie.demo.domain.carts.domain.model.entity.CartItem;
 

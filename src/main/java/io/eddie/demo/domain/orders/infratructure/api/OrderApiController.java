@@ -1,8 +1,8 @@
 package io.eddie.demo.domain.orders.infratructure.api;
 
 import io.eddie.demo.common.model.web.BaseResponse;
-import io.eddie.demo.domain.orders.domain.model.OrderMapper;
-import io.eddie.demo.domain.orders.domain.model.dto.OrderDescription;
+import io.eddie.demo.domain.orders.infratructure.api.dto.OrderMapper;
+import io.eddie.demo.domain.orders.infratructure.api.dto.OrderDescription;
 import io.eddie.demo.domain.orders.domain.model.entity.Orders;
 import io.eddie.demo.domain.orders.domain.model.vo.CreateOrderRequest;
 import io.eddie.demo.domain.orders.application.port.in.OrderUseCase;

@@ -1,7 +1,5 @@
-package io.eddie.demo.domain.orders.domain.model;
+package io.eddie.demo.domain.orders.infratructure.api.dto;
 
-import io.eddie.demo.domain.orders.domain.model.dto.OrderDescription;
-import io.eddie.demo.domain.orders.domain.model.dto.OrderItemDescription;
 import io.eddie.demo.domain.orders.domain.model.entity.OrderItem;
 import io.eddie.demo.domain.orders.domain.model.entity.Orders;
 
