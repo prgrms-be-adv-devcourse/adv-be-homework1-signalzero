@@ -1,11 +1,10 @@
 package io.eddie.demo.common.view;
 
-import io.eddie.demo.domain.carts.mapper.CartMapper;
-import io.eddie.demo.domain.carts.model.dto.CartDescription;
-import io.eddie.demo.domain.carts.model.entity.Cart;
-import io.eddie.demo.domain.carts.service.CartService;
+import io.eddie.demo.domain.carts.domain.model.CartMapper;
+import io.eddie.demo.domain.carts.domain.model.dto.CartDescription;
+import io.eddie.demo.domain.carts.domain.model.entity.Cart;
+import io.eddie.demo.domain.carts.application.port.in.CartUseCase;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/view")
 public class ViewController {
 
-    private final CartService cartService;
+    private final CartUseCase cartUseCase;
 
     @GetMapping("/carts/{accountCode}")
     public String viewCartDescriptionPage(
@@ -25,7 +24,7 @@ public class ViewController {
             Model model
     ) {
 
-        Cart cart = cartService.getByAccountCode(accountCode);
+        Cart cart = cartUseCase.getByAccountCode(accountCode);
         model.addAttribute("cart", cart);
 
         return "carts/cart";
@@ -39,7 +38,7 @@ public class ViewController {
 
         // 장바구니 아이템 코드가 다 넘어왓다는 가정
 
-        Cart cart = cartService.getByAccountCode(accountCode);
+        Cart cart = cartUseCase.getByAccountCode(accountCode);
         CartDescription description = CartMapper.toCartDescription(cart);
 
         model.addAttribute("description", description);

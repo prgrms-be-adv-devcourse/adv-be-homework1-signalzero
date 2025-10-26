@@ -1,8 +1,7 @@
 package io.eddie.demo.domain.orders.service;
 
-import io.eddie.demo.domain.carts.model.entity.Cart;
-import io.eddie.demo.domain.carts.model.entity.CartItem;
-import io.eddie.demo.domain.carts.service.CartService;
+import io.eddie.demo.domain.carts.domain.model.entity.CartItem;
+import io.eddie.demo.domain.carts.application.port.in.CartUseCase;
 import io.eddie.demo.domain.orders.model.entity.OrderItem;
 import io.eddie.demo.domain.orders.model.entity.Orders;
 import io.eddie.demo.domain.orders.model.vo.CreateOrderRequest;
@@ -24,7 +23,7 @@ public class OrderServiceImpl implements OrderService {
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
 
-    private final CartService cartService;
+    private final CartUseCase cartUseCase;
 
     @Override
     @Transactional
@@ -34,7 +33,7 @@ public class OrderServiceImpl implements OrderService {
                 .accountCode(accountCode)
                 .build();
 
-        List<CartItem> targetItems = cartService.getItemsByCodes(request.cartItemCodes());
+        List<CartItem> targetItems = cartUseCase.getItemsByCodes(request.cartItemCodes());
 
         if ( targetItems.isEmpty() )
             throw new IllegalStateException("선택된 아이템이 없습니다");
@@ -56,7 +55,7 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.save(order);
 
         orderItemRepository.saveAll(orderItems);
-        cartService.deleteItemsByCodes(request.cartItemCodes());
+        cartUseCase.deleteItemsByCodes(request.cartItemCodes());
 
         return order;
     }

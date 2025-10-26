@@ -1,4 +1,4 @@
-package io.eddie.demo.domain.carts.model.entity;
+package io.eddie.demo.domain.carts.domain.model.entity;
 
 import io.eddie.demo.common.model.persistence.BaseEntity;
 import jakarta.persistence.Entity;

@@ -1,10 +1,11 @@
-package io.eddie.demo.domain.carts.service;
+package io.eddie.demo.domain.carts.application.adapter;
 
-import io.eddie.demo.domain.carts.model.entity.Cart;
-import io.eddie.demo.domain.carts.model.entity.CartItem;
-import io.eddie.demo.domain.carts.model.vo.CreateCartItemRequest;
-import io.eddie.demo.domain.carts.repository.CartItemRepository;
-import io.eddie.demo.domain.carts.repository.CartRepository;
+import io.eddie.demo.domain.carts.application.port.in.CartUseCase;
+import io.eddie.demo.domain.carts.application.port.out.CartItemPersistencePort;
+import io.eddie.demo.domain.carts.application.port.out.CartPersistencePort;
+import io.eddie.demo.domain.carts.domain.model.entity.Cart;
+import io.eddie.demo.domain.carts.domain.model.entity.CartItem;
+import io.eddie.demo.domain.carts.domain.model.vo.CreateCartItemRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,10 +14,10 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CartServiceImpl implements CartService {
+public class CartApplication implements CartUseCase {
 
-    private final CartRepository cartRepository;
-    private final CartItemRepository cartItemRepository;
+    private final CartPersistencePort cartPersistencePort;
+    private final CartItemPersistencePort cartItemPersistencePort;
 
     @Override
     @Transactional
@@ -26,28 +27,28 @@ public class CartServiceImpl implements CartService {
                 .accountCode(accountCode)
                 .build();
 
-        return cartRepository.save(cart);
+        return cartPersistencePort.save(cart);
 
     }
 
     @Override
     @Transactional(readOnly = true)
     public Cart getByAccountCode(String accountCode) {
-        return cartRepository.findByAccountCode(accountCode)
+        return cartPersistencePort.findByAccountCode(accountCode)
                 .orElseThrow(() -> new IllegalArgumentException("잘못된 회원 코드가 입력되었습니다."));
     }
 
     @Override
     @Transactional(readOnly = true)
     public CartItem getItem(String accountCode, String cartItemCode) {
-        return cartItemRepository.findOwnCartItem(accountCode, cartItemCode)
+        return cartItemPersistencePort.findOwnCartItem(accountCode, cartItemCode)
                 .orElseThrow(() -> new IllegalArgumentException("해당 장바구니 항목을 찾을 수 없습니다."));
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<CartItem> getItemsByCodes(List<String> cartItemCodes) {
-        return cartItemRepository.findAllByCodesIn(cartItemCodes);
+        return cartItemPersistencePort.findAllByCodesIn(cartItemCodes);
     }
 
     @Override
@@ -64,7 +65,7 @@ public class CartServiceImpl implements CartService {
                 .quantity(request.quantity())
                 .build();
 
-        return cartItemRepository.save(cartItem);
+        return cartItemPersistencePort.save(cartItem);
 
     }
 
@@ -97,14 +98,14 @@ public class CartServiceImpl implements CartService {
     public void deleteItem(String accountCode, String cartItemCode) {
 
         CartItem targetItem = getItem(accountCode, cartItemCode);
-        cartItemRepository.delete(targetItem);
+        cartItemPersistencePort.delete(targetItem);
 
     }
 
     @Override
     @Transactional
     public void deleteItemsByCodes(List<String> cartItemCodes) {
-        cartItemRepository.deleteAll(getItemsByCodes(cartItemCodes));
+        cartItemPersistencePort.deleteAll(getItemsByCodes(cartItemCodes));
     }
 
 }

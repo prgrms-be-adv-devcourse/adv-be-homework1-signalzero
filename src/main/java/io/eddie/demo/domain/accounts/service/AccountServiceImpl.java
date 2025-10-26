@@ -3,8 +3,8 @@ package io.eddie.demo.domain.accounts.service;
 import io.eddie.demo.domain.accounts.model.dto.CreateAccountRequest;
 import io.eddie.demo.domain.accounts.model.entity.Account;
 import io.eddie.demo.domain.accounts.repository.AccountRepository;
-import io.eddie.demo.domain.carts.model.entity.Cart;
-import io.eddie.demo.domain.carts.service.CartService;
+import io.eddie.demo.domain.carts.domain.model.entity.Cart;
+import io.eddie.demo.domain.carts.application.port.in.CartUseCase;
 import io.eddie.demo.domain.deposits.model.entity.Deposit;
 import io.eddie.demo.domain.deposits.service.DepositService;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ public class AccountServiceImpl implements AccountService {
     private final PasswordEncoder passwordEncoder;
     private final AccountRepository accountRepository;
 
-    private final CartService cartService;
+    private final CartUseCase cartUseCase;
     private final DepositService depositService;
 
     @Override
@@ -31,7 +31,7 @@ public class AccountServiceImpl implements AccountService {
                 .email(request.email())
                 .build();
 
-        Cart cart = cartService.save(account.getCode());
+        Cart cart = cartUseCase.save(account.getCode());
         account.setCartCode(cart.getCode());
 
         Deposit deposit = depositService.save(account.getCode());

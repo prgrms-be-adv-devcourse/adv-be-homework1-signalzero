@@ -1,4 +1,4 @@
-package io.eddie.demo.domain.carts.model.vo;
+package io.eddie.demo.domain.carts.domain.model.vo;
 
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;

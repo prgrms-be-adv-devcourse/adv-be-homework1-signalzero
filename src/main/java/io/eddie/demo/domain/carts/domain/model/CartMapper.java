@@ -1,9 +1,9 @@
-package io.eddie.demo.domain.carts.mapper;
+package io.eddie.demo.domain.carts.domain.model;
 
-import io.eddie.demo.domain.carts.model.dto.CartDescription;
-import io.eddie.demo.domain.carts.model.dto.CartItemDescription;
-import io.eddie.demo.domain.carts.model.entity.Cart;
-import io.eddie.demo.domain.carts.model.entity.CartItem;
+import io.eddie.demo.domain.carts.domain.model.dto.CartDescription;
+import io.eddie.demo.domain.carts.domain.model.dto.CartItemDescription;
+import io.eddie.demo.domain.carts.domain.model.entity.Cart;
+import io.eddie.demo.domain.carts.domain.model.entity.CartItem;
 
 public class CartMapper {
 
