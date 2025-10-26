@@ -1,4 +1,4 @@
-package io.eddie.demo.domain.orders.application.adapter;
+package io.eddie.demo.domain.orders.application.service;
 
 import io.eddie.demo.domain.carts.domain.model.entity.CartItem;
 import io.eddie.demo.domain.carts.application.port.in.CartUseCase;

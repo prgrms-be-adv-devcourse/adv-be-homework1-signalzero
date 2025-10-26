@@ -1,4 +1,4 @@
-package io.eddie.demo.domain.carts.application.adapter;
+package io.eddie.demo.domain.carts.application.service;
 
 import io.eddie.demo.domain.carts.application.port.in.CartUseCase;
 import io.eddie.demo.domain.carts.application.port.out.CartItemPersistencePort;
