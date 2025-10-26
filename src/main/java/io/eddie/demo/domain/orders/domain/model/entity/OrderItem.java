@@ -1,4 +1,4 @@
-package io.eddie.demo.domain.orders.model.entity;
+package io.eddie.demo.domain.orders.domain.model.entity;
 
 import io.eddie.demo.common.model.persistence.BaseEntity;
 import jakarta.persistence.Column;

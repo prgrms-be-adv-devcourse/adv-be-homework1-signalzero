@@ -1,13 +1,14 @@
-package io.eddie.demo.domain.orders.service;
+package io.eddie.demo.domain.orders.application.adapter;
 
 import io.eddie.demo.domain.carts.domain.model.entity.CartItem;
 import io.eddie.demo.domain.carts.application.port.in.CartUseCase;
-import io.eddie.demo.domain.orders.model.entity.OrderItem;
-import io.eddie.demo.domain.orders.model.entity.Orders;
-import io.eddie.demo.domain.orders.model.vo.CreateOrderRequest;
-import io.eddie.demo.domain.orders.model.vo.OrderState;
-import io.eddie.demo.domain.orders.repository.OrderItemRepository;
-import io.eddie.demo.domain.orders.repository.OrderRepository;
+import io.eddie.demo.domain.orders.application.port.in.OrderUseCase;
+import io.eddie.demo.domain.orders.application.port.out.OrderItemPersistencePort;
+import io.eddie.demo.domain.orders.application.port.out.OrderPersistencePort;
+import io.eddie.demo.domain.orders.domain.model.entity.OrderItem;
+import io.eddie.demo.domain.orders.domain.model.entity.Orders;
+import io.eddie.demo.domain.orders.domain.model.vo.CreateOrderRequest;
+import io.eddie.demo.domain.orders.domain.model.vo.OrderState;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,11 +19,10 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class OrderServiceImpl implements OrderService {
+public class OrderApplication implements OrderUseCase {
 
-    private final OrderRepository orderRepository;
-    private final OrderItemRepository orderItemRepository;
-
+    private final OrderPersistencePort orderPersistencePort;
+    private final OrderItemPersistencePort orderItemPersistencePort;
     private final CartUseCase cartUseCase;
 
     @Override
@@ -52,9 +52,9 @@ public class OrderServiceImpl implements OrderService {
                 })
                 .toList();
 
-        orderRepository.save(order);
+        orderPersistencePort.save(order);
 
-        orderItemRepository.saveAll(orderItems);
+        orderItemPersistencePort.saveAll(orderItems);
         cartUseCase.deleteItemsByCodes(request.cartItemCodes());
 
         return order;
@@ -63,13 +63,13 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional(readOnly = true)
     public Orders getOrder(String accountCode, String orderCode) {
-        return orderRepository.findByAccountCodeAndCode(accountCode, orderCode)
+        return orderPersistencePort.findByAccountCodeAndCode(accountCode, orderCode)
                 .orElseThrow(() -> new IllegalArgumentException("주문을 찾을 수 없습니다."));
     }
 
     @Override
     public Orders getOrderByCode(String code) {
-        return orderRepository.findByCode(code)
+        return orderPersistencePort.findByCode(code)
                 .orElseThrow(() -> new IllegalArgumentException("해당 주문을 찾을 수 없습니다."));
     }
 
@@ -129,7 +129,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     @Transactional(readOnly = true)
     public Page<Orders> getOrders(String accountCode, Pageable pageable) {
-        return orderRepository.findAllByAccountCode(accountCode, pageable);
+        return orderPersistencePort.findAllByAccountCode(accountCode, pageable);
     }
 
 }

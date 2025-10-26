@@ -1,11 +1,11 @@
-package io.eddie.demo.domain.orders.api;
+package io.eddie.demo.domain.orders.infratructure.api;
 
 import io.eddie.demo.common.model.web.BaseResponse;
-import io.eddie.demo.domain.orders.mapper.OrderMapper;
-import io.eddie.demo.domain.orders.model.dto.OrderDescription;
-import io.eddie.demo.domain.orders.model.entity.Orders;
-import io.eddie.demo.domain.orders.model.vo.CreateOrderRequest;
-import io.eddie.demo.domain.orders.service.OrderService;
+import io.eddie.demo.domain.orders.domain.model.OrderMapper;
+import io.eddie.demo.domain.orders.domain.model.dto.OrderDescription;
+import io.eddie.demo.domain.orders.domain.model.entity.Orders;
+import io.eddie.demo.domain.orders.domain.model.vo.CreateOrderRequest;
+import io.eddie.demo.domain.orders.application.port.in.OrderUseCase;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/orders")
 public class OrderApiController {
 
-    private final OrderService orderService;
+    private final OrderUseCase orderUseCase;
 
     @PostMapping
     public BaseResponse<OrderDescription> create(
@@ -24,7 +24,7 @@ public class OrderApiController {
             @RequestBody @Valid CreateOrderRequest request
     ) {
 
-        Orders order = orderService.createOrder(accountCode, request);
+        Orders order = orderUseCase.createOrder(accountCode, request);
 
         return new BaseResponse<>(
                 OrderMapper.toOrderDescription(order),
@@ -39,7 +39,7 @@ public class OrderApiController {
             @PathVariable String orderCode
     ) {
 
-        Orders order = orderService.getOrder(accountCode, orderCode);
+        Orders order = orderUseCase.getOrder(accountCode, orderCode);
 
         return new BaseResponse<>(
                 OrderMapper.toOrderDescription(order),

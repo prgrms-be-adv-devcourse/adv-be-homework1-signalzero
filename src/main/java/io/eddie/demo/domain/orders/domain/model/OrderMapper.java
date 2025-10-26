@@ -1,10 +1,9 @@
-package io.eddie.demo.domain.orders.mapper;
+package io.eddie.demo.domain.orders.domain.model;
 
-import io.eddie.demo.domain.orders.model.dto.OrderDescription;
-import io.eddie.demo.domain.orders.model.dto.OrderItemDescription;
-import io.eddie.demo.domain.orders.model.entity.OrderItem;
-import io.eddie.demo.domain.orders.model.entity.Orders;
-import org.hibernate.query.Order;
+import io.eddie.demo.domain.orders.domain.model.dto.OrderDescription;
+import io.eddie.demo.domain.orders.domain.model.dto.OrderItemDescription;
+import io.eddie.demo.domain.orders.domain.model.entity.OrderItem;
+import io.eddie.demo.domain.orders.domain.model.entity.Orders;
 
 public class OrderMapper {
 

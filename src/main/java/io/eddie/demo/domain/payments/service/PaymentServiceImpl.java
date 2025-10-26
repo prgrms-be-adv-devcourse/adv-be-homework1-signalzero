@@ -5,8 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.eddie.demo.domain.deposits.model.entity.Deposit;
 import io.eddie.demo.domain.deposits.model.entity.DepositHistory;
 import io.eddie.demo.domain.deposits.service.DepositService;
-import io.eddie.demo.domain.orders.model.entity.Orders;
-import io.eddie.demo.domain.orders.service.OrderService;
+import io.eddie.demo.domain.orders.domain.model.entity.Orders;
+import io.eddie.demo.domain.orders.application.port.in.OrderUseCase;
 import io.eddie.demo.domain.payments.model.dto.PaymentRequest;
 import io.eddie.demo.domain.payments.model.entity.Payment;
 import io.eddie.demo.domain.payments.model.vo.*;
@@ -34,7 +34,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     private final ObjectMapper om;
 
-    private final OrderService orderService;
+    private final OrderUseCase orderUseCase;
     private final DepositService depositService;
     private final PaymentRepository paymentRepository;
 
@@ -105,7 +105,7 @@ public class PaymentServiceImpl implements PaymentService {
 
         payment.setPaymentStatus(PaymentStatus.PAYMENT_COMPLETED);
 
-        orderService.completeOrder(accountCode, orderCode);
+        orderUseCase.completeOrder(accountCode, orderCode);
 
         return paymentRepository.save(payment);
 
@@ -130,7 +130,7 @@ public class PaymentServiceImpl implements PaymentService {
 
         payment.setPaymentStatus(PaymentStatus.PAYMENT_COMPLETED);
 
-        orderService.completeOrder(accountCode, orderCode);
+        orderUseCase.completeOrder(accountCode, orderCode);
 
         return paymentRepository.save(payment);
 
@@ -146,7 +146,7 @@ public class PaymentServiceImpl implements PaymentService {
         if (!payment.canRevoke())
             throw new IllegalStateException("환불할 수 없는 상태입니다.");
 
-        Orders order = orderService.getOrder(accountCode, request.getOrderCode());
+        Orders order = orderUseCase.getOrder(accountCode, request.getOrderCode());
 
         depositService.refund(accountCode, DepositHistory.DepositHistoryType.REFUND_INTERNAL, order.getTotalPrice());
 

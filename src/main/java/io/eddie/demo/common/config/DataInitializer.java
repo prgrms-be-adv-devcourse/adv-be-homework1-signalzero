@@ -9,9 +9,9 @@ import io.eddie.demo.domain.carts.domain.model.vo.CreateCartItemRequest;
 import io.eddie.demo.domain.carts.application.port.in.CartUseCase;
 import io.eddie.demo.domain.deposits.model.entity.DepositHistory;
 import io.eddie.demo.domain.deposits.service.DepositService;
-import io.eddie.demo.domain.orders.model.entity.Orders;
-import io.eddie.demo.domain.orders.model.vo.CreateOrderRequest;
-import io.eddie.demo.domain.orders.service.OrderService;
+import io.eddie.demo.domain.orders.domain.model.entity.Orders;
+import io.eddie.demo.domain.orders.domain.model.vo.CreateOrderRequest;
+import io.eddie.demo.domain.orders.application.port.in.OrderUseCase;
 import io.eddie.demo.domain.payments.model.dto.PaymentRequest;
 import io.eddie.demo.domain.payments.model.vo.PaymentType;
 import io.eddie.demo.domain.payments.service.PaymentService;
@@ -39,7 +39,7 @@ public class DataInitializer implements ApplicationRunner {
     private final CartUseCase cartUseCase;
 
     private final DepositService depositService;
-    private final OrderService orderService;
+    private final OrderUseCase orderUseCase;
     private final PaymentService paymentService;
 
     @Override
@@ -93,7 +93,7 @@ public class DataInitializer implements ApplicationRunner {
         accountList.forEach(a -> {
             List<String> itemCodes = accountToCartItemCodes.getOrDefault(a.getCode(), List.of());
             if (!itemCodes.isEmpty()) {
-                Orders order = orderService.createOrder(a.getCode(), new CreateOrderRequest(itemCodes));
+                Orders order = orderUseCase.createOrder(a.getCode(), new CreateOrderRequest(itemCodes));
                 orderList.put(a.getCode(), order);
             }
         });

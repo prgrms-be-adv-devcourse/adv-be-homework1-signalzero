@@ -1,7 +1,7 @@
-package io.eddie.demo.domain.orders.model.entity;
+package io.eddie.demo.domain.orders.domain.model.entity;
 
 import io.eddie.demo.common.model.persistence.BaseEntity;
-import io.eddie.demo.domain.orders.model.vo.OrderState;
+import io.eddie.demo.domain.orders.domain.model.vo.OrderState;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
